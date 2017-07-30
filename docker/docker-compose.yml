@@ -1,0 +1,45 @@
+version: '2'
+services:
+ app:
+  image: busybox
+  container_name: 'app'
+  volumes:
+   - ../logs:/usr/local/apache2/logs
+   - ../www:/var/www
+   - ../data/mysql/:/var/lib/mysql
+
+ db:
+  image: reflet/debian8-mysql57
+  container_name: 'db'
+  ports:
+   - '3306:3306'
+  volumes:
+   - ./mysql.sql:/docker-entrypoint-initdb.d/mysql.sql
+  volumes_from:
+   - app
+  env_file: .env
+
+ php:
+  image: reflet/debian8-php56
+  container_name: 'php'
+  ports:
+   - '9000:9000'
+  volumes:
+   - ./php.ini:/usr/local/etc/php/php.ini
+  volumes_from:
+   - app
+  links:
+   - db
+
+ httpd:
+  image: reflet/debian8-httpd
+  container_name: 'httpd'
+  ports:
+   - '80:80'
+  volumes:
+   - ./virtualhost:/usr/local/apache2/conf.d/virtualhost/
+  volumes_from:
+   - app
+  links:
+   - php
+
