@@ -17,7 +17,7 @@ services:
    - ./mysql.sql:/docker-entrypoint-initdb.d/mysql.sql
   volumes_from:
    - app
-  env_file: .env
+  env_file: mysql.env
 
  php:
   image: reflet/debian8-php56
