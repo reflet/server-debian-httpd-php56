@@ -6,7 +6,7 @@ services:
   volumes:
    - ../logs:/usr/local/apache2/logs
    - ../www:/var/www
-   - /var/lib/mysql
+   - ../mysql:/var/lib/mysql
 
  db:
   image: reflet/debian8-mysql57
