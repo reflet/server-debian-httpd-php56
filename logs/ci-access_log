@@ -1,0 +1,2 @@
+192.168.33.1 - - [31/Jul/2017:23:16:29 +0900] "GET / HTTP/1.1" 200 56 "-" "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_12_6) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/59.0.3071.115 Safari/537.36"
+192.168.33.1 - - [31/Jul/2017:23:16:30 +0900] "GET / HTTP/1.1" 304 - "-" "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_12_6) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/59.0.3071.115 Safari/537.36"
