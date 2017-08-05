@@ -4,3 +4,8 @@
 .vagrant
 .DS_Store
 vendor
+/docker/data/mysql/*
+/docker/data/postgres/*
+/docker/logs/httpd/*
+!.gitkeep
+
