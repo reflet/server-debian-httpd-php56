@@ -24,9 +24,7 @@ $ docker-compose ps
 
 ※localhostの部分は、環境に合わせて変更ください。
 
-例) vagrantにて192.168.33.10にサーバを起動した場合
-
-   localhost -> 192.168.33.10
+例) vagrantにて192.168.33.10にサーバ起動 (localhost -> 192.168.33.10)
 
 ```
 $ curl http://{localhost}/
