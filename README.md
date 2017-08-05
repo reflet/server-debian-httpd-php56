@@ -21,9 +21,12 @@ $ docker-compose ps
 ## テストについて（ TEST ）
 
 下記コマンドにて、結果が返ってきたら問題ありません。
+※localhostの部分は、環境に合わせて変更ください。
+　例) vagrantにて192.168.33.10にサーバを起動した場合
+ 　localhost -> 192.168.33.10
 
 ```
-$ curl http://localhost/
+$ curl http://{localhost}/
 ```
 
 ## メンテナンスについて（ EXEC ）
