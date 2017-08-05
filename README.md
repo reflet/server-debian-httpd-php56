@@ -22,13 +22,13 @@ $ docker-compose ps
 
 下記コマンドにて、結果が返ってきたら問題ありません。
 
-※localhostの部分は、環境に合わせて変更ください。
-
-例) vagrantにて192.168.33.10にサーバ起動 (localhost -> 192.168.33.10)
-
 ```
 $ curl http://{localhost}/
 ```
+
+※localhostの部分は、環境に合わせて変更ください。
+
+例) vagrantにて192.168.33.10にサーバ起動 (localhost -> 192.168.33.10)
 
 ## メンテナンスについて（ EXEC ）
 
