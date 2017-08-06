@@ -38,6 +38,7 @@ services:
    - '9000:9000'
   volumes:
    - ./php.ini:/usr/local/etc/php/php.ini
+   - ./php-ssmtp.conf:/etc/ssmtp/ssmtp.conf
   volumes_from:
    - app
   links:
