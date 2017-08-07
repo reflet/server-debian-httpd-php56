@@ -5,9 +5,6 @@ services:
   container_name: 'app'
   volumes:
    - ../www:/var/www
-   - ./logs/httpd:/usr/local/apache2/logs
-   - ./data/mysql:/var/lib/mysql
-   - ./data/postgres:/var/lib/postgresql
 
  mysql:
   image: reflet/debian8-mysql57:1.1
@@ -17,19 +14,17 @@ services:
    - '3306:3306'
   volumes:
    - ./initdb.mysql:/docker-entrypoint-initdb.d/
-  volumes_from:
-   - app
+   - mysql-data:/var/lib/mysql
 
  postgres:
-  image: reflet/debian8-postgres96:1.0
+  image: reflet/debian8-postgres96:1.1
   container_name: 'postgres'
   env_file: .env.postgres
   volumes:
-      - ./initdb.postgres:/docker-entrypoint-initdb.d/
+   - ./initdb.postgres:/docker-entrypoint-initdb.d/
+   - postgres-data:/var/lib/postgresql/data/
   ports:
       - "5432:5432"
-  volumes_from:
-      - app
 
  php:
   image: reflet/debian8-php56:1.4
@@ -53,8 +48,20 @@ services:
    - '443:443'
   volumes:
    - ./virtualhost:/usr/local/apache2/conf.d/virtualhost/
+   - httpd-log:/usr/local/apache2/logs/
   volumes_from:
    - app
   links:
    - php
+
+volumes:
+  postgres-data:
+    driver: local
+  mysql-data:
+    driver: local
+  httpd-log:
+    driver_opts:
+      type: none
+      device: /home/vagrant/opt/docker/logs/httpd/
+      o: bind
 
