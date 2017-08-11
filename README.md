@@ -5,6 +5,7 @@ docker-composeコマンドを使っての操作方法を記載します。
 ## 起動方法について（ RUN ）
 
 下記のコマンドにてコンテナを起動します。 (port 80 is available)
+
 ※ メール送信を使う場合は、php-ssmtp.conf内にgmailのID,PWDを設定してください。
 
 ```
