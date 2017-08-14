@@ -1,6 +1,9 @@
 
--- rootに権限追加
-grant all privileges on *.* to root@localhost identified by 'development' with grant option;
+/**
+ * rootに権限追加
+ * mysql> SHOW GRANTS FOR 'root'@'localhost';
+ */
+grant all privileges on *.* to 'root'@'localhost' identified by 'mysql' with grant option;
 
 /**
  * Sample SQL
