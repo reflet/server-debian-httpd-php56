@@ -6,9 +6,13 @@ docker-composeコマンドを使っての操作方法を記載します。
 
 下記のコマンドにてコンテナを起動します。 (port 80 is available)
 
+※ メール送信を使う場合は、php-ssmtp.conf内にgmailのID,PWDを設定してください。
+
 ```
 $ git clone https://github.com/reflet/server-debian8-httpd-php56.git .
 $ cd docker
+$ cp php-ssmtp.conf.default php-ssmtp.conf
+$ vi php-ssmtp.conf
 $ docker-compose up -d
 ```
 
