@@ -67,12 +67,25 @@ services:
     vpcbr:
       ipv4_address: 10.2.0.6
 
+ smtp:
+  image: schickling/mailcatcher
+  container_name: 'smtp'
+  ports:
+   - "1080:1080"
+   - "1025:1025"
+  networks:
+    vpcbr:
+      ipv4_address: 10.2.0.7
+
  selenium:
   image: selenium/standalone-chrome-debug:latest
   container_name: "selenium"
   ports:
    - '4444:4444'
    - '5900:5900'
+  networks:
+    vpcbr:
+      ipv4_address: 10.2.0.8
 
 volumes:
   postgres-data:
