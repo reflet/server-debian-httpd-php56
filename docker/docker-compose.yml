@@ -43,6 +43,7 @@ services:
   volumes:
    - ./php.ini:/usr/local/etc/php/php.ini
    - ./ssmtp.conf:/etc/ssmtp/ssmtp.conf
+   - ./xdebug.ini:/etc/xdebug.ini
   volumes_from:
    - app
   extra_hosts:
