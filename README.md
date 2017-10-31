@@ -11,7 +11,6 @@ docker-composeコマンドを使っての操作方法を記載します。
 ```
 $ git clone https://github.com/reflet/server-debian8-httpd-php56.git .
 $ cd docker
-$ vi php-ssmtp.conf
 $ docker-compose up -d
 ```
 
@@ -28,6 +27,18 @@ $ docker-compose ps
 ```
 $ curl http://{localhost}/
 ```
+
+※localhostの部分は、環境に合わせて変更ください。
+
+例) vagrantにて192.168.33.10にサーバ起動 (localhost -> 192.168.33.10)
+
+## メール送信について
+ 
+mailCatcherを利用しています。
+
+送信したメールは、実際には送信されず、mailCatcherに保管されており、下記WebUIで確認できます。
+
+http://{localhost}:1080
 
 ※localhostの部分は、環境に合わせて変更ください。
 
