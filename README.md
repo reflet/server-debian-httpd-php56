@@ -11,7 +11,6 @@ docker-composeコマンドを使っての操作方法を記載します。
 ```
 $ git clone https://github.com/reflet/server-debian8-httpd-php56.git .
 $ cd docker
-$ cp php-ssmtp.conf.default php-ssmtp.conf
 $ vi php-ssmtp.conf
 $ docker-compose up -d
 ```

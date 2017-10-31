@@ -36,13 +36,13 @@ services:
       ipv4_address: 10.2.0.4
 
  php:
-  image: reflet/debian8-php56:1.5
+  image: reflet/debian8-php56:1.6
   container_name: 'php'
   ports:
    - '9000:9000'
   volumes:
    - ./php.ini:/usr/local/etc/php/php.ini
-   - ./php-ssmtp.conf:/etc/ssmtp/ssmtp.conf
+   - ./ssmtp.conf:/etc/ssmtp/ssmtp.conf
   volumes_from:
    - app
   extra_hosts:
