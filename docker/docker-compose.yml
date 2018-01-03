@@ -10,7 +10,7 @@ services:
       ipv4_address: 10.2.0.2
 
  mysql:
-  image: reflet/debian8-mysql57:1.1
+  image: reflet/debian8-mysql55:1.0
   container_name: 'mysql'
   env_file: .env.mysql
   ports:
@@ -23,7 +23,7 @@ services:
       ipv4_address: 10.2.0.3
 
  postgres:
-  image: reflet/debian8-postgres96:1.1
+  image: reflet/debian8-postgres91:1.1
   container_name: 'postgres'
   env_file: .env.postgres
   ports:
@@ -43,6 +43,7 @@ services:
   volumes:
    - ./php.ini:/usr/local/etc/php/php.ini
    - ./ssmtp.conf:/etc/ssmtp/ssmtp.conf
+   # - ./xdebug.ini:/usr/local/etc/php.d/xdebug.ini
    - ./xdebug.ini:/etc/xdebug.ini
   volumes_from:
    - app
