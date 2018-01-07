@@ -35,7 +35,7 @@ services:
   mysql:
     image: reflet/debian8-mysql55:1.0
     container_name: 'mysql'
-    env_file: ./docker/mysql/.env
+    env_file: ./docker/mysql/env
     ports:
       - '3306:3306'
     volumes:
@@ -48,7 +48,7 @@ services:
   postgres:
     image: reflet/debian8-postgres91:1.1
     container_name: 'postgres'
-    env_file: ./docker/postgres/.env
+    env_file: ./docker/postgres/env
     ports:
       - "5432:5432"
     volumes:
