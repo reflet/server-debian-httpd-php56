@@ -1,58 +1,5 @@
 version: '2'
 services:
-  app:
-    image: busybox
-    container_name: 'app'
-    volumes:
-      - ./www:/var/www
-    networks:
-      vpcbr:
-        ipv4_address: 10.2.0.2
-
-  mysql:
-    image: reflet/debian8-mysql55:1.0
-    container_name: 'mysql'
-    env_file: ./docker/.env.mysql
-    ports:
-      - '3306:3306'
-    volumes:
-      - ./docker/initdb.mysql:/docker-entrypoint-initdb.d/
-      - mysql-data:/var/lib/mysql
-    networks:
-      vpcbr:
-        ipv4_address: 10.2.0.3
-
-  postgres:
-    image: reflet/debian8-postgres91:1.1
-    container_name: 'postgres'
-    env_file: ./docker/.env.postgres
-    ports:
-      - "5432:5432"
-    volumes:
-      - ./docker/initdb.postgres:/docker-entrypoint-initdb.d/
-      - postgres-data:/var/lib/postgresql/data/
-    networks:
-      vpcbr:
-        ipv4_address: 10.2.0.4
-
-  php:
-    image: reflet/debian8-php56:1.6
-    container_name: 'php'
-    ports:
-      - '9000:9000'
-    volumes:
-      - ./docker/php.ini:/usr/local/etc/php/php.ini
-      - ./docker/ssmtp.conf:/etc/ssmtp/ssmtp.conf
-      # - ./docker/xdebug.ini:/usr/local/etc/php.d/xdebug.ini
-      - ./docker/xdebug.ini:/etc/xdebug.ini
-    volumes_from:
-      - app
-    extra_hosts:
-      - "www.example.com:10.2.0.6"
-    networks:
-      vpcbr:
-        ipv4_address: 10.2.0.5
-
   httpd:
     image: reflet/debian8-httpd:1.6
     container_name: 'httpd'
@@ -61,12 +8,55 @@ services:
       - '443:443'
     volumes:
       - ./docker/virtualhost:/usr/local/apache2/conf.d/virtualhost/
-      - httpd-log:/usr/local/apache2/logs/
+      - web-httpd-log:/usr/local/apache2/logs/
     volumes_from:
-      - app
+      - php
     networks:
-      vpcbr:
-        ipv4_address: 10.2.0.6
+      default:
+        ipv4_address: 10.0.0.2
+
+  php:
+    image: reflet/debian8-php56:1.6
+    container_name: 'php'
+    command: bash -c 'usermod -o -u ${UID} www-data; groupmod -o -g ${UID} www-data; php-fpm'
+    ports:
+      - '9000:9000'
+    volumes:
+      - ./www:/var/www
+      - ./docker/php/php.ini:/usr/local/etc/php/php.ini
+      - ./docker/php/ssmtp.conf:/etc/ssmtp/ssmtp.conf
+      - ./docker/php/xdebug.ini:/usr/local/etc/php.d/xdebug.ini
+    extra_hosts:
+      - "www.example.com:10.0.0.2"
+    networks:
+      default:
+        ipv4_address: 10.0.0.3
+
+  mysql:
+    image: reflet/debian8-mysql55:1.0
+    container_name: 'mysql'
+    env_file: ./docker/mysql/.env
+    ports:
+      - '3306:3306'
+    volumes:
+      - web-mysql:/var/lib/mysql
+      - ./docker/mysql/initdb:/docker-entrypoint-initdb.d/
+    networks:
+      default:
+        ipv4_address: 10.0.0.4
+
+  postgres:
+    image: reflet/debian8-postgres91:1.1
+    container_name: 'postgres'
+    env_file: ./docker/postgres/.env
+    ports:
+      - "5432:5432"
+    volumes:
+      - ./docker/postgres/initdb:/docker-entrypoint-initdb.d/
+      - web-postgres:/var/lib/postgresql/data/
+    networks:
+      default:
+        ipv4_address: 10.0.0.5
 
   smtp:
     image: schickling/mailcatcher
@@ -75,8 +65,8 @@ services:
       - '1080:1080'
       - '1025:1025'
     networks:
-      vpcbr:
-        ipv4_address: 10.2.0.7
+      default:
+        ipv4_address: 10.0.0.6
 
   selenium:
     image: selenium/standalone-chrome-debug:latest
@@ -85,24 +75,24 @@ services:
       - '4444:4444'
       - '5900:5900'
     networks:
-      vpcbr:
-        ipv4_address: 10.2.0.8
+      default:
+        ipv4_address: 10.0.0.7
 
 volumes:
-  postgres-data:
+  web-postgres:
     driver: local
-  mysql-data:
+  web-mysql:
     driver: local
-  httpd-log:
+  web-httpd-log:
     driver_opts:
       type: none
-      device: /home/vagrant/opt/docker/logs/httpd/
+      device: ${PWD}/logs/
       o: bind
 
 networks:
-  vpcbr:
+  default:
     driver: bridge
     ipam:
      config:
-       - subnet: 10.2.0.0/16
-         gateway: 10.2.0.1
+       - subnet: 10.0.0.0/16
+         gateway: 10.0.0.1

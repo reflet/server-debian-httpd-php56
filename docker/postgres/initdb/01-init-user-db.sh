@@ -1,6 +1,10 @@
 #!/bin/bash
 set -e
 
+# -----------------------------
+# [sample]
+# dockerデータベース作成
+# -----------------------------
 psql -v ON_ERROR_STOP=1 --username "$POSTGRES_USER" <<-EOSQL
     CREATE USER docker;
     CREATE DATABASE docker;

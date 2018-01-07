@@ -11,16 +11,14 @@ build
 nbproject/
 .vagrant
 vendor
-!.gitkeep
 
 # # hidden files created by Windows
 Thumbs.db
 desktop.ini
 
-# docker file
-/docker/php-ssmtp.conf
-/docker/logs/*
-!/docker/logs/httpd/.gitkeep
+# logs
+/logs/*
+!/logs/.gitkeep
 
 # Document Root.
 /www/*

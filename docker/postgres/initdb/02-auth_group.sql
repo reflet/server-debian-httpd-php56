@@ -1,5 +1,9 @@
 \c docker docker
 
+# -----------------------------
+# [sample]
+# auth_groupテーブル作成
+# -----------------------------
 CREATE TABLE auth_group (
     id integer NOT NULL,
     name character varying(80) NOT NULL
