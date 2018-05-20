@@ -1,4 +1,5 @@
 version: '2'
+
 services:
   httpd:
     image: reflet/debian8-httpd:1.6
@@ -12,8 +13,8 @@ services:
     volumes_from:
       - php
     networks:
-      default:
-        ipv4_address: 10.0.0.2
+      app_net:
+        ipv4_address: 172.16.238.2
 
   php:
     image: reflet/debian8-php56:1.6
@@ -27,10 +28,10 @@ services:
       - ./docker/php/ssmtp.conf:/etc/ssmtp/ssmtp.conf
       - ./docker/php/xdebug.ini:/usr/local/etc/php.d/xdebug.ini
     extra_hosts:
-      - "www.example.com:10.0.0.2"
+      - "www.example.com:172.16.238.2"
     networks:
-      default:
-        ipv4_address: 10.0.0.3
+      app_net:
+        ipv4_address: 172.16.238.3
 
   mysql:
     image: reflet/debian8-mysql55:1.0
@@ -42,8 +43,8 @@ services:
       - mysql-data:/var/lib/mysql
       - ./docker/mysql/initdb:/docker-entrypoint-initdb.d/
     networks:
-      default:
-        ipv4_address: 10.0.0.4
+      app_net:
+        ipv4_address: 172.16.238.4
 
   postgres:
     image: reflet/debian8-postgres91:1.1
@@ -55,8 +56,8 @@ services:
       - postgres-data:/var/lib/postgresql/data/
       - ./docker/postgres/initdb:/docker-entrypoint-initdb.d/
     networks:
-      default:
-        ipv4_address: 10.0.0.5
+      app_net:
+        ipv4_address: 172.16.238.5
 
   smtp:
     image: schickling/mailcatcher
@@ -65,8 +66,8 @@ services:
       - '1080:1080'
       - '1025:1025'
     networks:
-      default:
-        ipv4_address: 10.0.0.6
+      app_net:
+        ipv4_address: 172.16.238.6
 
   selenium:
     image: selenium/standalone-chrome-debug:latest
@@ -75,8 +76,8 @@ services:
       - '4444:4444'
       - '5900:5900'
     networks:
-      default:
-        ipv4_address: 10.0.0.7
+      app_net:
+        ipv4_address: 172.16.238.7
 
 volumes:
   postgres-data:
@@ -90,9 +91,11 @@ volumes:
       o: bind
 
 networks:
-  default:
+  app_net:
     driver: bridge
     ipam:
+     driver: default
      config:
-       - subnet: 10.0.0.0/16
-         gateway: 10.0.0.1
+       - subnet: 172.16.238.0/24
+         gateway: 172.16.238.1
+
